@@ -38,7 +38,7 @@ export const NEWS_ARTICLES: NewsArticle[] = [
     summary: 'The department has officially launched its new internship program for the upcoming semester.',
     content: 'Full content of the article would go here...',
     image: 'https://picsum.photos/seed/internship/400/300',
-    category: 'Instruction',
+    category: 'Sports',
     author: 'Jane Smith',
     tags: ['Internship', 'Department', 'Program'],
     role: 'faculty'
@@ -50,7 +50,7 @@ export const NEWS_ARTICLES: NewsArticle[] = [
     summary: 'A celebration for Juliet\'s birthday was held last night with many attendees.',
     content: 'Full content of the article would go here...',
     image: 'https://picsum.photos/seed/birthday/400/300',
-    category: 'Events',
+    category: 'Science',
     author: 'Mike Johnson',
     tags: ['Birthday', 'Celebration', 'Events'],
     role: 'student'

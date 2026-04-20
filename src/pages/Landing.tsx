@@ -4,116 +4,174 @@
  */
 
 import { motion } from 'motion/react';
-import { Link } from 'react-router-dom';
-import { ArrowRight } from 'lucide-react';
+import { Link, useNavigate } from 'react-router-dom';
+import { Calendar, ExternalLink, Star } from 'lucide-react';
+import { NEWS_ARTICLES } from '../types';
 
 export default function Landing() {
+  // Sample data - in real app, fetch from API
+  const latestNews = NEWS_ARTICLES.slice(0, 3);
+  const featuredAnnouncements = NEWS_ARTICLES.filter(article => article.category === 'Politics').slice(0, 2);
+  const upcomingEvents = [
+    { id: 1, title: 'EARIST Career Fair 2026', date: 'April 25, 2026', description: 'Connect with top companies and explore career opportunities.' },
+    { id: 2, title: 'Science Research Symposium', date: 'May 10, 2026', description: 'Showcase innovative research projects from students and faculty.' }
+  ];
+  const quickLinks = [
+    { title: 'Student Portal', url: '/login', icon: '👤' },
+    { title: 'Library', url: '/archive', icon: '📚' },
+    { title: 'News Archive', url: '/archive', icon: '📰' },
+    { title: 'Contact Us', url: '#', icon: '📞' }
+  ];
+  const highlights = [
+    { title: 'New Research Lab Opens', image: 'https://picsum.photos/seed/lab/400/300', description: 'State-of-the-art facilities for science and technology research.' },
+    { title: 'Student Achievement Awards', image: 'https://picsum.photos/seed/awards/400/300', description: 'Celebrating outstanding student accomplishments.' }
+  ];
+
+  const navigate = useNavigate();
+
+  const categoryBadge = (category: string) => {
+    const styles: Record<string, string> = {
+      Politics: 'bg-earist-red text-white',
+      Science: 'bg-earist-yellow text-black',
+      Sports: 'bg-earist-blue text-white',
+      Nature: 'bg-earist-green text-white',
+      Instruction: 'bg-earist-yellow text-black',
+      Events: 'bg-earist-red text-white',
+    };
+    return styles[category] ?? 'bg-gray-200 text-gray-800';
+  };
+
   return (
-    <div className="flex flex-col">
-      {/* Hero Section */}
-      <section className="relative h-[90vh] flex items-center overflow-hidden">
-        <div className="absolute inset-0 z-0">
-          <img 
-            src= "D:\earistnewsweb\src\components\Images\earist_logo-Photoroom.png" 
-            alt="EARIST Campus" 
-            className="w-full h-full object-cover"
-            referrerPolicy="no-referrer"
-          />
-          <div className="absolute inset-0 bg-gradient-to-r from-earist-red/90 to-transparent" />
+    <>
+      {/* Full-width Hero Cover */}
+      <section className="relative w-full min-h-[75vh] overflow-hidden bg-black">
+        <div className="absolute inset-0 bg-[url('https://picsum.photos/seed/campus/1600/900')] bg-cover bg-center opacity-30" />
+        <div className="absolute inset-0 bg-black/70" />
+        <div className="relative z-10 flex min-h-[75vh] flex-col items-center justify-center px-6 text-center">
+          <h1 className="text-6xl md:text-7xl font-serif font-bold text-white drop-shadow-[0_10px_30px_rgba(0,0,0,0.6)]">
+            Welcome to EARIST
+          </h1>
+          <p className="mt-4 text-lg md:text-2xl text-white/80 max-w-3xl">
+            Excellence in Science & Technology Education
+          </p>
         </div>
+      </section>
 
-        <div className="container mx-auto px-6 relative z-10 text-white">
-          <motion.div 
-            initial={{ opacity: 0, x: -50 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8 }}
-            className="max-w-3xl space-y-8"
-          >
-            <h1 className="text-7xl md:text-8xl font-serif font-bold leading-tight">
-              Excellence in <br />
-              <span className="text-earist-yellow italic">Science & Tech</span>
-            </h1>
-            <p className="text-2xl md:text-3xl font-light leading-relaxed opacity-90">
-              Empowering the next generation of innovators and leaders since 1945. 
-              Join the Eulogio "Amang" Institute of Science and Technology.
-            </p>
-            <div className="flex flex-wrap gap-6 pt-4">
-              <Link 
-                to="/news" 
-                className="bg-earist-yellow text-black px-10 py-4 rounded-full font-bold text-xl flex items-center gap-3 hover:bg-yellow-400 transition-all hover:scale-105 shadow-2xl"
-              >
-                Read Latest News <ArrowRight />
-              </Link>
-              <Link 
-                to="/login" 
-                className="bg-white/10 backdrop-blur-md border-2 border-white text-white px-10 py-4 rounded-full font-bold text-xl hover:bg-white hover:text-earist-red transition-all shadow-2xl"
-              >
-                Student Portal
-              </Link>
-            </div>
-          </motion.div>
-        </div>
-
-        {/* Floating Stats */}
-        <div className="absolute bottom-12 right-12 hidden lg:flex gap-12">
-          {[
-            { label: 'Founded', value: '1945' },
-            { label: 'Students', value: '15k+' },
-            { label: 'Programs', value: '45+' }
-          ].map((stat, i) => (
-            <motion.div 
-              key={stat.label}
+      <div className="container mx-auto px-6 py-12 space-y-16">
+      {/* Latest News */}
+      <section>
+        <h2 className="text-4xl font-serif font-bold mb-8">Latest News</h2>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {latestNews.map(article => (
+            <motion.div
+              key={article.id}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.5 + (i * 0.1) }}
-              className="text-right"
+              whileHover={{ y: -6, scale: 1.01 }}
+              transition={{ duration: 0.25 }}
+              onClick={() => navigate(`/article/${article.id}`)}
+              className="group cursor-pointer overflow-hidden rounded-3xl border border-gray-200 bg-white shadow-sm transition-shadow hover:shadow-2xl"
             >
-              <p className="text-earist-yellow text-4xl font-serif font-bold">{stat.value}</p>
-              <p className="text-white/70 uppercase tracking-widest text-sm">{stat.label}</p>
+              <img
+                src={article.image}
+                alt={article.title}
+                className="w-full h-56 object-cover transition-transform duration-300 group-hover:scale-105"
+              />
+              <div className="p-6 flex h-full flex-col justify-between">
+                <div>
+                  <Link
+                    to={`/topic/${encodeURIComponent(article.category)}`}
+                    onClick={(e) => e.stopPropagation()}
+                    className={`inline-flex rounded-full px-3 py-1 text-xs font-semibold uppercase tracking-[0.24em] ${categoryBadge(article.category)}`}
+                  >
+                    {article.category}
+                  </Link>
+                  <h3 className="mt-4 text-2xl font-semibold text-gray-900 mb-4">
+                    {article.title}
+                  </h3>
+                  <p className="text-gray-600 mb-6">
+                    {article.summary}
+                  </p>
+                </div>
+                <div className="mt-auto flex flex-wrap items-center justify-between text-sm text-gray-500 gap-2">
+                  <span>{article.date}</span>
+                  <span>{article.author}</span>
+                </div>
+              </div>
             </motion.div>
           ))}
         </div>
       </section>
 
-      {/* Mission & Vision Split */}
-      <section className="grid grid-cols-1 lg:grid-cols-2">
-        <div className="bg-earist-red text-white p-20 flex flex-col justify-center space-y-8">
-          <h2 className="text-5xl font-serif font-bold italic">Our Mission</h2>
-          <p className="text-2xl font-light leading-relaxed">
-            To provide quality education in science and technology, and to produce 
-            highly competent and socially responsible professionals who will 
-            contribute to the national development.
-          </p>
-        </div>
-        <div className="bg-earist-yellow text-black p-20 flex flex-col justify-center space-y-8">
-          <h2 className="text-5xl font-serif font-bold italic">Our Vision</h2>
-          <p className="text-2xl font-light leading-relaxed">
-            A center of excellence in science and technology education, 
-            research, and community service in the Asia-Pacific region.
-          </p>
+      {/* Featured Announcements */}
+      <section>
+        <h2 className="text-4xl font-serif font-bold mb-8 flex items-center gap-2">
+          <Star className="text-earist-yellow" />
+          Featured Announcements
+        </h2>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          {featuredAnnouncements.map(article => (
+            <div key={article.id} className="bg-earist-red text-white p-6 rounded-lg">
+              <h3 className="text-2xl font-bold mb-4">{article.title}</h3>
+              <p className="mb-4">{article.summary}</p>
+              <span className="text-earist-yellow">{article.date}</span>
+            </div>
+          ))}
         </div>
       </section>
 
-      {/* Call to Action */}
-      <section className="py-32 bg-gray-900 text-white text-center relative overflow-hidden">
-        <div className="absolute inset-0 opacity-20">
-          <img src="https://picsum.photos/seed/tech-bg/1920/1080?blur=10" alt="bg" className="w-full h-full object-cover" />
+      {/* Upcoming Events */}
+      <section>
+        <h2 className="text-4xl font-serif font-bold mb-8 flex items-center gap-2">
+          <Calendar className="text-earist-red" />
+          Upcoming Events
+        </h2>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          {upcomingEvents.map(event => (
+            <div key={event.id} className="bg-white border-2 border-earist-red p-6 rounded-lg">
+              <h3 className="text-2xl font-bold mb-2">{event.title}</h3>
+              <p className="text-earist-red font-semibold mb-2">{event.date}</p>
+              <p className="text-gray-600">{event.description}</p>
+            </div>
+          ))}
         </div>
-        <div className="container mx-auto px-6 relative z-10 space-y-12">
-          <h2 className="text-6xl font-serif font-bold italic">Ready to start your journey?</h2>
-          <p className="text-2xl max-w-2xl mx-auto opacity-80">
-            Join thousands of students who are shaping the future of technology at EARIST.
-          </p>
-          <div className="flex justify-center gap-8">
-            <button className="bg-earist-red text-white px-12 py-5 rounded-full font-bold text-2xl hover:bg-red-700 transition-all hover:scale-105 shadow-2xl">
-              Apply Now
-            </button>
-            <Link to="/news" className="bg-white text-black px-12 py-5 rounded-full font-bold text-2xl hover:bg-gray-200 transition-all hover:scale-105 shadow-2xl">
-              Explore News
+      </section>
+
+      {/* Quick Links */}
+      <section>
+        <h2 className="text-4xl font-serif font-bold mb-8">Quick Links</h2>
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+          {quickLinks.map((link, index) => (
+            <Link
+              key={index}
+              to={link.url}
+              className="bg-earist-yellow text-black p-6 rounded-lg text-center hover:bg-yellow-400 transition-colors"
+            >
+              <div className="text-4xl mb-2">{link.icon}</div>
+              <div className="font-bold">{link.title}</div>
             </Link>
-          </div>
+          ))}
+        </div>
+      </section>
+
+      {/* Highlights */}
+      <section>
+        <h2 className="text-4xl font-serif font-bold mb-8">Highlights</h2>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          {highlights.map((highlight, index) => (
+            <div key={index} className="relative rounded-lg overflow-hidden shadow-lg">
+              <img src={highlight.image} alt={highlight.title} className="w-full h-64 object-cover" />
+              <div className="absolute inset-0 bg-black bg-opacity-50 flex items-end p-6">
+                <div className="text-white">
+                  <h3 className="text-2xl font-bold mb-2">{highlight.title}</h3>
+                  <p>{highlight.description}</p>
+                </div>
+              </div>
+            </div>
+          ))}
         </div>
       </section>
     </div>
+    </>
   );
 }

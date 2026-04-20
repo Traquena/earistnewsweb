@@ -6,24 +6,11 @@
 import { Link, useParams } from 'react-router-dom';
 import { Download, Share2 } from 'lucide-react';
 import { motion } from 'motion/react';
-import { CATEGORIES } from '../types';
-
-const ARTICLES = [
-  { id: '1', name: 'Quantum AI Breakthroughs', image: 'https://picsum.photos/seed/science1/800/500', date: 'Feb 20, 2026', category: 'Science', title: 'The Rise of Edge Computing in 2026', content: 'As IoT devices become more sophisticated, edge computing is shifting data processing away from centralized clouds and closer to the devices themselves. This topic explores how this reduces latency for autonomous vehicles and smart city infrastructure.' },
-  { id: '2', name: 'New Research Grants Announced', image: 'https://picsum.photos/seed/science2/800/500', date: 'Feb 18, 2026', category: 'Science', title: 'New Research Grants Announced', content: 'The research department has announced new grants for innovative projects in quantum computing and artificial intelligence.' },
-  { id: '3', name: 'Lab Safety Innovations', image: 'https://picsum.photos/seed/science3/800/500', date: 'Feb 16, 2026', category: 'Science', title: 'Lab Safety Innovations', content: 'New safety protocols and innovations are being implemented across all research laboratories.' },
-  { id: '4', name: 'Campus Government Reform', image: 'https://picsum.photos/seed/politics1/800/500', date: 'Feb 14, 2026', category: 'Politics', title: 'Campus Government Reform', content: 'The campus government is undergoing significant reforms to improve student representation.' },
-  { id: '5', name: 'Election Watch Updates', image: 'https://picsum.photos/seed/politics2/800/500', date: 'Feb 12, 2026', category: 'Politics', title: 'Election Watch Updates', content: 'Latest updates on upcoming campus elections and voting information.' },
-  { id: '6', name: 'New Policy Announcement', image: 'https://picsum.photos/seed/politics3/800/500', date: 'Feb 10, 2026', category: 'Politics', title: 'New Policy Announcement', content: 'The institution announces new policies affecting student and faculty.' },
-  { id: '7', name: 'Intercollegiate Finals', image: 'https://picsum.photos/seed/sports1/800/500', date: 'Feb 08, 2026', category: 'Sports', title: 'Intercollegiate Finals', content: 'Our athletes advance to the intercollegiate finals.' },
-  { id: '8', name: 'Track Meet Results', image: 'https://picsum.photos/seed/sports2/800/500', date: 'Feb 06, 2026', category: 'Sports', title: 'Track Meet Results', content: 'Outstanding performances at the recent track meet.' },
-  { id: '9', name: 'Nature Conservation Drive', image: 'https://picsum.photos/seed/nature1/800/500', date: 'Feb 04, 2026', category: 'Nature', title: 'Nature Conservation Drive', content: 'Join us in our efforts to conserve local ecosystems.' },
-  { id: '10', name: 'Environmental Innovation Fair', image: 'https://picsum.photos/seed/nature2/800/500', date: 'Feb 02, 2026', category: 'Nature', title: 'Environmental Innovation Fair', content: 'Showcasing innovative solutions for environmental challenges.' },
-];
+import { CATEGORIES, NEWS_ARTICLES } from '../types';
 
 export default function ArticleDetail() {
   const { articleId } = useParams();
-  const article = ARTICLES.find((a) => a.id === articleId);
+  const article = NEWS_ARTICLES.find((a) => a.id === articleId);
 
   if (!article) {
     return (
@@ -36,7 +23,7 @@ export default function ArticleDetail() {
     );
   }
 
-  const recentNews = ARTICLES.filter((a) => a.id !== articleId).slice(0, 3);
+  const recentNews = NEWS_ARTICLES.filter((a) => a.id !== articleId).slice(0, 3);
 
   return (
     <div className="container mx-auto px-6 py-12">
@@ -122,13 +109,13 @@ export default function ArticleDetail() {
                 <Link to={`/article/${newsItem.id}`} className="flex gap-4 w-full">
                   <img
                     src={newsItem.image}
-                    alt={newsItem.name}
+                    alt={newsItem.title}
                     className="w-24 h-24 object-cover rounded-lg group-hover:scale-110 transition-transform"
                     referrerPolicy="no-referrer"
                   />
                   <div className="flex-1">
                     <p className="text-sm font-semibold text-gray-700 group-hover:text-earist-red transition-colors">
-                      {newsItem.name}
+                      {newsItem.title}
                     </p>
                     <p className="text-earist-red font-bold text-xs mt-2">{newsItem.date}</p>
                   </div>

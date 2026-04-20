@@ -5,6 +5,7 @@
 
 import { motion } from 'motion/react';
 import { Link } from 'react-router-dom';
+import earistLogo from '../components/Images/earist_logo-Photoroom.png';
 
 export default function Login() {
   return (
@@ -17,7 +18,7 @@ export default function Login() {
         <div className="flex flex-col items-center gap-8">
           <div className="flex items-center gap-4">
             <img 
-              src= "D:\earistnewsweb\src\components\Images\earist_logo-Photoroom.png" 
+              src={earistLogo}
               alt="EARIST Logo" 
               className="h-20 w-20"
               referrerPolicy="no-referrer"
@@ -28,12 +29,14 @@ export default function Login() {
           <div className="w-full space-y-6">
             <input 
               type="text" 
-              placeholder="Username" 
+              name="username"
+              placeholder="Admin Username" 
               className="w-full p-5 rounded-md border-none focus:ring-4 focus:ring-earist-yellow outline-none text-2xl placeholder:text-gray-400"
             />
             <input 
               type="password" 
-              placeholder="Password" 
+              name="password"
+              placeholder="Admin Password" 
               className="w-full p-5 rounded-md border-none focus:ring-4 focus:ring-earist-yellow outline-none text-2xl placeholder:text-gray-400"
             />
           </div>
