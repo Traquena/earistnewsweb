@@ -5,7 +5,19 @@
 
 import { Link, useParams } from 'react-router-dom';
 import { motion } from 'motion/react';
-import { CATEGORIES } from '../types';
+import { CATEGORIES, NEWS_ARTICLES } from '../types';
+
+const categoryBadge = (category: string) => {
+  const styles: Record<string, string> = {
+    Politics: 'bg-earist-red text-white',
+    Science: 'bg-earist-yellow text-black',
+    Sports: 'bg-earist-yellow text-black',
+    Nature: 'bg-earist-green text-white',
+    Instruction: 'bg-earist-yellow text-black',
+    Events: 'bg-earist-red text-white',
+  };
+  return styles[category] ?? 'bg-gray-200 text-gray-800';
+};
 
 export const TOPICS = [
   { name: 'Quantum AI Breakthroughs', image: 'https://picsum.photos/seed/science1/600/340', date: 'Feb 20, 2026', category: 'Science' },
@@ -24,7 +36,7 @@ export default function Topics() {
   const { category } = useParams();
   const selectedCategory = category ? decodeURIComponent(category) : null;
   const categoryTopics = selectedCategory
-    ? TOPICS.filter((topic) => topic.category === selectedCategory)
+    ? NEWS_ARTICLES.filter((article) => article.category === selectedCategory)
     : [];
 
   return (
@@ -65,10 +77,9 @@ export default function Topics() {
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-            {categoryTopics.length > 0 ? categoryTopics.map((topic, index) => {
-              const topicIndex = TOPICS.findIndex((t) => t.name === topic.name);
+            {categoryTopics.length > 0 ? categoryTopics.map((article, index) => {
               return (
-                <Link key={`${topic.name}-${index}`} to={`/article/${topicIndex + 1}`}>
+                <Link key={`${article.id}-${index}`} to={`/article/${article.id}`}>
                   <motion.div
                     initial={{ opacity: 0, y: 30 }}
                     animate={{ opacity: 1, y: 0 }}
@@ -77,19 +88,24 @@ export default function Topics() {
                     className="overflow-hidden rounded-3xl shadow-2xl border border-gray-200 bg-white cursor-pointer"
                   >
                     <img
-                      src={topic.image}
-                      alt={topic.name}
+                      src={article.image}
+                      alt={article.title}
                       className="w-full h-56 object-cover"
                       referrerPolicy="no-referrer"
                     />
                     <div className="p-6">
+                      <div className="mb-4">
+                        <span className={`inline-flex rounded-full px-4 py-2 text-sm font-bold uppercase tracking-[0.24em] shadow-md ${categoryBadge(article.category)}`}>
+                          {article.category}
+                        </span>
+                      </div>
                       <div className="flex justify-between items-center mb-4">
-                        <span className="text-earist-red font-semibold">{topic.date}</span>
+                        <span className="text-earist-red font-semibold">{article.date}</span>
                       </div>
                       <h4 className="text-2xl font-serif font-bold mb-3 text-gray-900">
-                        {topic.name}
+                        {article.title}
                       </h4>
-                      <p className="text-gray-600">Latest updates and analysis for {selectedCategory.toLowerCase()} topics.</p>
+                      <p className="text-gray-600">{article.summary || 'Latest updates and analysis for ' + selectedCategory.toLowerCase() + ' topics.'}</p>
                     </div>
                   </motion.div>
                 </Link>
@@ -122,3 +138,4 @@ export default function Topics() {
     </div>
   );
 }
+

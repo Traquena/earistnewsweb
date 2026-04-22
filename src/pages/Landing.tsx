@@ -33,7 +33,7 @@ export default function Landing() {
     const styles: Record<string, string> = {
       Politics: 'bg-earist-red text-white',
       Science: 'bg-earist-yellow text-black',
-      Sports: 'bg-earist-blue text-white',
+      Sports: 'bg-earist-yellow text-black',
       Nature: 'bg-earist-green text-white',
       Instruction: 'bg-earist-yellow text-black',
       Events: 'bg-earist-red text-white',
@@ -82,7 +82,7 @@ export default function Landing() {
                   <Link
                     to={`/topic/${encodeURIComponent(article.category)}`}
                     onClick={(e) => e.stopPropagation()}
-                    className={`inline-flex rounded-full px-3 py-1 text-xs font-semibold uppercase tracking-[0.24em] ${categoryBadge(article.category)}`}
+                    className={`inline-flex rounded-full px-4 py-2 text-sm font-bold uppercase tracking-[0.24em] shadow-md ${categoryBadge(article.category)}`}
                   >
                     {article.category}
                   </Link>
@@ -137,22 +137,6 @@ export default function Landing() {
         </div>
       </section>
 
-      {/* Quick Links */}
-      <section>
-        <h2 className="text-4xl font-serif font-bold mb-8">Quick Links</h2>
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-          {quickLinks.map((link, index) => (
-            <Link
-              key={index}
-              to={link.url}
-              className="bg-earist-yellow text-black p-6 rounded-lg text-center hover:bg-yellow-400 transition-colors"
-            >
-              <div className="text-4xl mb-2">{link.icon}</div>
-              <div className="font-bold">{link.title}</div>
-            </Link>
-          ))}
-        </div>
-      </section>
 
       {/* Highlights */}
       <section>

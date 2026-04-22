@@ -3,9 +3,19 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+import React from 'react';
+import { useLocation } from 'react-router-dom';
 import { Facebook, Instagram } from 'lucide-react';
 
 export default function Footer() {
+  const location = useLocation();
+  const isAdminPage = location.pathname.startsWith('/admin');
+
+  // Don't render footer on admin pages
+  if (isAdminPage) {
+    return null;
+  }
+
   // Placeholder for admin-configurable social links
   const socialLinks = {
     facebook: 'https://www.facebook.com/EARISTOfficial', // Replace with admin-set link

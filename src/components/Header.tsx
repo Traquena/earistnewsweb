@@ -14,6 +14,7 @@ import earistLogo from './Images/earist_logo-Photoroom.png';
 export default function Header() {
   const location = useLocation();
   const isLoginPage = location.pathname === '/login';
+  const isAdminPage = location.pathname.startsWith('/admin');
   const [topicsOpen, setTopicsOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
@@ -28,7 +29,8 @@ export default function Header() {
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
-  if (isLoginPage) {
+  // Hide header for admin pages and login page
+  if (isLoginPage || isAdminPage) {
     return (
       <header className="bg-earist-red text-white py-4 px-6">
         <div className="container mx-auto flex items-center">
