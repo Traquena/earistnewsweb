@@ -1,1 +1,30 @@
+<<<<<<< HEAD
 # earistnewsweb
+=======
+<div align="center">
+<img width="1200" height="475" alt="GHBanner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
+</div>
+
+# Run and deploy your AI Studio app
+
+This contains everything you need to run your app locally.
+
+View your app in AI Studio: https://ai.studio/apps/5a805206-39bb-4cc2-b008-a230d55e8db1
+
+## Run Locally
+
+**Prerequisites:**  Node.js
+
+
+1. Install dependencies:
+   `npm install`
+2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
+## Sample Admin Account
+
+For testing purposes, use the following credentials to log in as an admin:
+
+- **Username:** admin
+- **Password:** password
+
+This account has full access to administrative features.
+>>>>>>> 24355d20d35ae8265aa46534c3f00a79136d73f4
