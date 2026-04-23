@@ -3,31 +3,38 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+import React, { useEffect, useState } from 'react';
 import { motion } from 'motion/react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Calendar, ExternalLink, Star } from 'lucide-react';
-import { NEWS_ARTICLES } from '../types';
 
 export default function Landing() {
-  // Sample data - in real app, fetch from API
-  const latestNews = NEWS_ARTICLES.slice(0, 3);
-  const featuredAnnouncements = NEWS_ARTICLES.filter(article => article.category === 'Politics').slice(0, 2);
+  const [articles, setArticles] = useState<any[]>([]);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    fetch('/api/articles')
+      .then(res => res.json())
+      .then(data => {
+        if (Array.isArray(data)) {
+          setArticles(data.filter(a => a.status === 'published'));
+        }
+      })
+      .catch(err => console.error('Error fetching articles:', err));
+  }, []);
+
+  const latestNews = articles;
+  const featuredAnnouncements = articles.filter(article => article.category === 'Politics').slice(0, 2);
+  
   const upcomingEvents = [
     { id: 1, title: 'EARIST Career Fair 2026', date: 'April 25, 2026', description: 'Connect with top companies and explore career opportunities.' },
     { id: 2, title: 'Science Research Symposium', date: 'May 10, 2026', description: 'Showcase innovative research projects from students and faculty.' }
   ];
-  const quickLinks = [
-    { title: 'Student Portal', url: '/login', icon: '👤' },
-    { title: 'Library', url: '/archive', icon: '📚' },
-    { title: 'News Archive', url: '/archive', icon: '📰' },
-    { title: 'Contact Us', url: '#', icon: '📞' }
-  ];
+
   const highlights = [
     { title: 'New Research Lab Opens', image: 'https://picsum.photos/seed/lab/400/300', description: 'State-of-the-art facilities for science and technology research.' },
     { title: 'Student Achievement Awards', image: 'https://picsum.photos/seed/awards/400/300', description: 'Celebrating outstanding student accomplishments.' }
   ];
-
-  const navigate = useNavigate();
 
   const categoryBadge = (category: string) => {
     const styles: Record<string, string> = {
@@ -58,26 +65,26 @@ export default function Landing() {
       </section>
 
       <div className="container mx-auto px-6 py-12 space-y-16">
-      {/* Latest News */}
+      {/* All News */}
       <section>
-        <h2 className="text-4xl font-serif font-bold mb-8">Latest News</h2>
+        <h2 className="text-4xl font-serif font-bold mb-8">All News</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {latestNews.map(article => (
+          {latestNews.length > 0 ? latestNews.map(article => (
             <motion.div
-              key={article.id}
+              key={article.article_id}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               whileHover={{ y: -6, scale: 1.01 }}
               transition={{ duration: 0.25 }}
-              onClick={() => navigate(`/article/${article.id}`)}
-              className="group cursor-pointer overflow-hidden rounded-3xl border border-gray-200 bg-white shadow-sm transition-shadow hover:shadow-2xl"
+              onClick={() => navigate(`/article/${article.article_id}`)}
+              className="group cursor-pointer overflow-hidden rounded-3xl border border-gray-200 bg-white shadow-sm transition-shadow hover:shadow-2xl flex flex-col"
             >
               <img
-                src={article.image}
+                src={article.image_url || `https://picsum.photos/seed/${article.article_id}/800/450`}
                 alt={article.title}
                 className="w-full h-56 object-cover transition-transform duration-300 group-hover:scale-105"
               />
-              <div className="p-6 flex h-full flex-col justify-between">
+              <div className="p-6 flex flex-1 flex-col justify-between">
                 <div>
                   <Link
                     to={`/topic/${encodeURIComponent(article.category)}`}
@@ -86,20 +93,22 @@ export default function Landing() {
                   >
                     {article.category}
                   </Link>
-                  <h3 className="mt-4 text-2xl font-semibold text-gray-900 mb-4">
+                  <h3 className="mt-4 text-2xl font-semibold text-gray-900 mb-4 line-clamp-2">
                     {article.title}
                   </h3>
-                  <p className="text-gray-600 mb-6">
+                  <p className="text-gray-600 mb-6 line-clamp-3">
                     {article.summary}
                   </p>
                 </div>
                 <div className="mt-auto flex flex-wrap items-center justify-between text-sm text-gray-500 gap-2">
-                  <span>{article.date}</span>
+                  <span>{new Date(article.published_date).toLocaleDateString()}</span>
                   <span>{article.author}</span>
                 </div>
               </div>
             </motion.div>
-          ))}
+          )) : (
+            <p className="text-gray-500">No news articles published yet.</p>
+          )}
         </div>
       </section>
 
@@ -110,13 +119,15 @@ export default function Landing() {
           Featured Announcements
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          {featuredAnnouncements.map(article => (
-            <div key={article.id} className="bg-earist-red text-white p-6 rounded-lg">
+          {featuredAnnouncements.length > 0 ? featuredAnnouncements.map(article => (
+            <div key={article.article_id} className="bg-earist-red text-white p-6 rounded-lg cursor-pointer hover:bg-red-800 transition-colors" onClick={() => navigate(`/article/${article.article_id}`)}>
               <h3 className="text-2xl font-bold mb-4">{article.title}</h3>
               <p className="mb-4">{article.summary}</p>
-              <span className="text-earist-yellow">{article.date}</span>
+              <span className="text-earist-yellow">{new Date(article.published_date).toLocaleDateString()}</span>
             </div>
-          ))}
+          )) : (
+            <p className="text-gray-500">No featured announcements at this time.</p>
+          )}
         </div>
       </section>
 

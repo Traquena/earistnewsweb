@@ -64,12 +64,7 @@ export default function Header() {
           Eulogio "Amang" Institute of Science and Technology
         </h1>
         <div className="flex-shrink-0">
-          <Link 
-            to="/login" 
-            className="bg-earist-red text-white px-8 py-2 rounded-full font-bold hover:bg-red-700 transition-colors text-lg"
-          >
-            LOGIN
-          </Link>
+          {/* Login button removed for public facing website */}
         </div>
       </div>
 

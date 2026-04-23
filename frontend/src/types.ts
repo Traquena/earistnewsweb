@@ -25,7 +25,7 @@ export interface AdminUser {
 export interface AuthContextType {
   isAuthenticated: boolean;
   user: AdminUser | null;
-  login: (username: string, password: string) => boolean;
+  login: (username: string, password: string) => Promise<boolean>;
   logout: () => void;
 }
 

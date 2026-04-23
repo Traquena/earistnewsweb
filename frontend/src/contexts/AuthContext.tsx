@@ -27,16 +27,25 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     }
   }, []);
 
-  const login = (username: string, password: string): boolean => {
-    const adminUser = ADMIN_ACCOUNTS.find(
-      account => account.username === username && account.password === password
-    );
+  const login = async (username: string, password: string): Promise<boolean> => {
+    try {
+      const response = await fetch('/api/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ username, password }),
+      });
 
-    if (adminUser) {
-      setUser(adminUser);
-      setIsAuthenticated(true);
-      localStorage.setItem('adminUser', JSON.stringify(adminUser));
-      return true;
+      if (response.ok) {
+        const adminUser = await response.json();
+        setUser(adminUser);
+        setIsAuthenticated(true);
+        localStorage.setItem('adminUser', JSON.stringify(adminUser));
+        return true;
+      }
+    } catch (error) {
+      console.error('Login error:', error);
     }
     return false;
   };

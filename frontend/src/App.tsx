@@ -13,6 +13,9 @@ import ArticleDetail from './pages/ArticleDetail';
 import About from './pages/About';
 import Archive from './pages/Archive';
 import Admin from './pages/Admin';
+import CreateNews from './pages/CreateNews';
+import AdminUsers from './pages/AdminUsers';
+import EditUser from './pages/EditUser';
 import { AuthProvider } from './contexts/AuthContext';
 
 export default function App() {
@@ -29,6 +32,10 @@ export default function App() {
             <Route path="/about" element={<About />} />
             <Route path="/archive" element={<Archive />} />
             <Route path="/admin" element={<Admin />} />
+            <Route path="/admin/create-news" element={<CreateNews />} />
+            <Route path="/admin/edit-news/:id" element={<CreateNews />} />
+            <Route path="/admin/users" element={<AdminUsers />} />
+            <Route path="/admin/edit-user/:id" element={<EditUser />} />
             {/* Fallback routes for other links in the header */}
             <Route path="/library" element={<Archive />} />
             <Route path="/instruction" element={<Archive />} />

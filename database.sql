@@ -39,7 +39,7 @@ CREATE TABLE articles (
 -- Sample seed data
 INSERT INTO admins (username, email, password_hash, full_name, role)
 VALUES
-  ('admin', 'admin@earist.edu.ph', '$2y$12$LQv3c1yqBWVHxkd0LHAkCOYz6TtxMQJqhN8/LewdBPj8lWZQjQ0K6', 'EARIST Administrator', 'admin');
+  ('admin', 'admin@earist.edu.ph', '$2b$10$/zF9zhF9yMpb0ZwZCqxPqulc84QftcsiN0zCiO6O3WCUVjINg1Pny', 'EARIST Administrator', 'admin');
 
 INSERT INTO categories (name, slug, description)
 VALUES

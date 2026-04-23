@@ -56,7 +56,7 @@ export default function AdminNavbar({ currentPage = 'dashboard' }: AdminNavbarPr
                 className={`px-4 py-2 rounded-lg transition-all font-medium ${
                   currentPage === item.id
                     ? 'bg-earist-yellow text-black'
-                    : 'text-white hover:bg-white hover:bg-opacity-20'
+                    : 'text-white hover:bg-white hover:text-earist-red'
                 }`}
               >
                 {item.label}
@@ -64,18 +64,22 @@ export default function AdminNavbar({ currentPage = 'dashboard' }: AdminNavbarPr
             ))}
           </div>
 
-          {/* User Info and Logout */}
+          {/* Logout & View Website */}
           <div className="flex items-center gap-4">
-            <div className="hidden sm:flex flex-col items-end">
-              <span className="text-sm font-medium">Welcome</span>
-              <span className="text-lg font-bold">{user?.name || user?.username}</span>
+            <div className="flex items-center gap-3">
+              <button
+                onClick={() => navigate('/')}
+                className="text-white hover:underline text-sm font-medium px-2"
+              >
+                View Website
+              </button>
+              <button
+                onClick={handleLogout}
+                className="bg-earist-yellow text-black px-6 py-2 rounded-lg font-bold hover:bg-yellow-400 transition-all hover:scale-105 shadow-lg"
+              >
+                Logout
+              </button>
             </div>
-            <button
-              onClick={handleLogout}
-              className="bg-earist-yellow text-black px-6 py-2 rounded-lg font-bold hover:bg-yellow-400 transition-all hover:scale-105 shadow-lg"
-            >
-              Logout
-            </button>
           </div>
         </div>
       </div>
