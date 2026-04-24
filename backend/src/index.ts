@@ -102,8 +102,8 @@ app.put('/api/articles/:id', upload.single('featureImage'), async (req, res) => 
   
   try {
     const [result]: any = await pool.query(
-      'UPDATE articles SET category_id = ?, author = ?, title = ?, summary = ?, content = ?, published_date = ?, image_url = ?, status = ? WHERE article_id = ?',
-      [category_id, author || 'Admin Team', title, summary, content, date, featureImage, status || 'published', req.params.id]
+      'UPDATE articles SET category_id = ?, author = ?, title = ?, summary = ?, content = ?, published_date = ?, image_url = ?, status = ?, display_location = ? WHERE article_id = ?',
+      [category_id, author || 'Admin Team', title, summary, content, date, featureImage, status || 'published', req.body.display_location || 'both', req.params.id]
     );
     
     if (result.affectedRows === 0) {
@@ -157,8 +157,8 @@ app.post('/api/articles', upload.single('featureImage'), async (req, res) => {
   
   try {
     const [result]: any = await pool.query(
-      'INSERT INTO articles (category_id, author, title, summary, content, published_date, image_url, status) VALUES (?, ?, ?, ?, ?, ?, ?, ?)',
-      [category_id, author || 'Admin Team', title, summary, content, date, featureImage, status || 'published']
+      'INSERT INTO articles (category_id, author, title, summary, content, published_date, image_url, status, display_location) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)',
+      [category_id, author || 'Admin Team', title, summary, content, date, featureImage, status || 'published', req.body.display_location || 'both']
     );
     res.status(201).json({ message: 'Article created successfully', articleId: result.insertId });
   } catch (error) {

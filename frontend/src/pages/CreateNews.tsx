@@ -22,6 +22,7 @@ const CreateNews = () => {
     content: '',
     featureImage: '',
     status: 'published',
+    display_location: 'both',
   });
   const [featureImageFile, setFeatureImageFile] = useState<File | null>(null);
   const [imagePreview, setImagePreview] = useState<string>('');
@@ -54,6 +55,7 @@ const CreateNews = () => {
             content: data.content || '',
             featureImage: data.image_url || '',
             status: data.status,
+            display_location: data.display_location || 'both',
           });
           if (data.image_url) {
             setImagePreview(data.image_url);
@@ -98,6 +100,7 @@ const CreateNews = () => {
       formData.append('summary', news.summary);
       formData.append('content', news.content);
       formData.append('status', news.status);
+      formData.append('display_location', news.display_location);
       formData.append('author', user?.name || user?.username || 'Admin Team');
       
       if (featureImageFile) {
@@ -273,6 +276,23 @@ const CreateNews = () => {
                 <option value="draft">Draft</option>
                 <option value="published">Published</option>
                 <option value="archived">Archived</option>
+              </select>
+            </div>
+
+            <div>
+              <label htmlFor="display_location" className="block text-sm font-medium text-gray-700 mb-1">
+                Display Location
+              </label>
+              <select
+                name="display_location"
+                id="display_location"
+                value={news.display_location}
+                onChange={handleChange}
+                className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2.5 focus:ring-earist-red focus:border-earist-red sm:text-sm"
+              >
+                <option value="both">Both (Homepage & Topics)</option>
+                <option value="homepage">Homepage Only</option>
+                <option value="topics">Topics Only</option>
               </select>
             </div>
           </div>

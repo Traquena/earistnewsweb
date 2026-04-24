@@ -17,7 +17,10 @@ export default function Landing() {
       .then(res => res.json())
       .then(data => {
         if (Array.isArray(data)) {
-          setArticles(data.filter(a => a.status === 'published'));
+          setArticles(data.filter(a => 
+            a.status === 'published' && 
+            (a.display_location === 'homepage' || a.display_location === 'both')
+          ));
         }
       })
       .catch(err => console.error('Error fetching articles:', err));

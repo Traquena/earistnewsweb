@@ -31,6 +31,7 @@ CREATE TABLE articles (
   published_date DATE NOT NULL,
   image_url VARCHAR(255) NULL,
   status ENUM('draft','published','archived') NOT NULL DEFAULT 'published',
+  display_location ENUM('homepage', 'topics', 'both') NOT NULL DEFAULT 'both',
   created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   FOREIGN KEY (category_id) REFERENCES categories(category_id) ON DELETE RESTRICT ON UPDATE CASCADE

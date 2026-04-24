@@ -183,5 +183,17 @@ export const NEWS_ARTICLES: NewsArticle[] = [
     author: 'John Doe',
     tags: ['Trees', 'Environment', 'Campaign'],
     role: 'student'
+  },
+  {
+    id: '13',
+    title: 'New Planetary Discovery',
+    date: 'April 02, 2026',
+    summary: 'Astronomers discover a new earth-like planet in a nearby star system, sparking excitement in the scientific community.',
+    content: 'Full content of the article would go here...',
+    image: 'https://picsum.photos/seed/planet/800/450',
+    category: 'Science',
+    author: 'Dr. Jane Evans',
+    tags: ['Astronomy', 'Science', 'Discovery'],
+    role: 'faculty'
   }
 ];

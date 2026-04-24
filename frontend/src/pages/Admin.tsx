@@ -145,6 +145,7 @@ export default function Admin() {
               <thead>
                 <tr className="border-b border-gray-200 bg-gray-50">
                   <th className="px-4 md:px-6 py-4 text-left text-sm font-semibold text-gray-700">Title</th>
+                  <th className="px-4 md:px-6 py-4 text-left text-sm font-semibold text-gray-700">Category</th>
                   <th className="px-4 md:px-6 py-4 text-left text-sm font-semibold text-gray-700">Status</th>
                   <th className="px-4 md:px-6 py-4 text-left text-sm font-semibold text-gray-700">Author</th>
                   <th className="px-4 md:px-6 py-4 text-left text-sm font-semibold text-gray-700">Date</th>
@@ -162,6 +163,11 @@ export default function Admin() {
                   >
                     <td className="px-4 md:px-6 py-4 text-sm text-gray-900 font-medium">
                       <p className="truncate max-w-xs">{article.title}</p>
+                    </td>
+                    <td className="px-4 md:px-6 py-4 text-sm text-gray-600">
+                      <span className="bg-gray-100 text-gray-800 px-2 py-1 rounded text-xs font-semibold">
+                        {article.category || 'Uncategorized'}
+                      </span>
                     </td>
                     <td className="px-4 md:px-6 py-4 text-sm text-gray-600">
                       <span className={`px-3 py-1 rounded-full text-xs font-medium ${article.status === 'published' ? 'bg-green-100 text-green-800' : 'bg-yellow-100 text-yellow-800'}`}>
@@ -189,7 +195,7 @@ export default function Admin() {
                   </motion.tr>
                 )) : (
                   <tr>
-                    <td colSpan={5} className="px-6 py-8 text-center text-gray-500">
+                    <td colSpan={6} className="px-6 py-8 text-center text-gray-500">
                       No articles found. Create one!
                     </td>
                   </tr>
